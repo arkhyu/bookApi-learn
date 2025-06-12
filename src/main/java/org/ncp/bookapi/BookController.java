@@ -1,14 +1,13 @@
 package org.ncp.bookapi;
 
 import org.ncp.bookapi.entities.Book;
-import org.ncp.bookapi.repositories.BookRepository;
 import org.ncp.bookapi.services.BookService.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/books")
@@ -22,7 +21,7 @@ public class BookController {
     }
 
     @GetMapping
-    public List<Book> getAllBooks() {
+    public List<Book>GetAllBooks() {
         return bookService.getAllBooks();
     }
 
@@ -34,7 +33,8 @@ public class BookController {
     }
 
     @PostMapping
-    public Book createBook(@RequestBody Book book) {
+    public Book CreateBook(@RequestBody Book book) {
         return bookService.createBook(book);
     }
 }
+
