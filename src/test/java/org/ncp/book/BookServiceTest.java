@@ -5,10 +5,8 @@ import org.ncp.bookapi.repositories.BookRepository;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
-import org.mockito.Mockito;
 import org.ncp.bookapi.services.BookService.BookService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
