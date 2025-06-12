@@ -1,6 +1,7 @@
 package org.ncp.bookapi.services.BookService;
 
 import org.ncp.bookapi.entities.Book;
+import org.ncp.bookapi.exceptions.BookNotFoundException;
 import org.ncp.bookapi.repositories.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,7 +34,7 @@ public class BookService {
         if (bookRepository.existsById(id)) {
             bookRepository.deleteById(id);
         } else {
-            throw new RuntimeException("Book not found with id: " + id);
+            throw new BookNotFoundException(id);
         }
     }
 }

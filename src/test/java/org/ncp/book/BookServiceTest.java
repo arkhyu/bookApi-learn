@@ -1,6 +1,7 @@
 package org.ncp.book;
 
 import org.ncp.bookapi.entities.Book;
+import org.ncp.bookapi.exceptions.BookNotFoundException;
 import org.ncp.bookapi.repositories.BookRepository;
 
 import org.junit.jupiter.api.Test;
@@ -88,11 +89,11 @@ public class BookServiceTest {
         when(repository.existsById(bookId)).thenReturn(false);
 
         // Act & Assert
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+        RuntimeException exception = assertThrows(BookNotFoundException.class, () -> {
             service.deleteBook(bookId);
         });
 
-        assertEquals("Book not found with id: 99", exception.getMessage());
+        assertEquals("Book with id 99 not found.", exception.getMessage());
         verify(repository, never()).deleteById(anyLong());
     }
 

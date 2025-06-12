@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.mockito.Mockito;
 import org.ncp.bookapi.BookController;
 import org.ncp.bookapi.entities.Book;
+import org.ncp.bookapi.exceptions.BookNotFoundException;
 import org.ncp.bookapi.services.BookService.BookService;
 
 import org.junit.jupiter.api.Test;
@@ -86,7 +87,7 @@ public class BookControllerTest {
         mockMvc.perform(post("/api/books")  // Replace with your actual path (e.g., /api/books)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(inputBook)))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.title").value("Title One"))
                 .andExpect(jsonPath("$.author").value("Author A"));
     }
@@ -110,7 +111,7 @@ public class BookControllerTest {
     void deleteBookReturnsNotFoundWhenBookDoesNotExist() throws Exception {
         Long bookId = 999L;
 
-        doThrow(new RuntimeException("Book not found with id: " + bookId))
+        doThrow(new BookNotFoundException(bookId))
                 .when(mockService).deleteBook(bookId);
 
         MockMvc mockMvc = MockMvcBuilders
