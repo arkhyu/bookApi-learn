@@ -36,5 +36,11 @@ public class BookController {
     public Book CreateBook(@RequestBody Book book) {
         return bookService.createBook(book);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
+        bookService.deleteBook(id);
+        return ResponseEntity.noContent().build();
+    }
 }
 

@@ -29,4 +29,11 @@ public class BookService {
     public List<Book> getAllBooks() {
         return bookRepository.findAll();
     }
+    public void deleteBook(Long id) {
+        if (bookRepository.existsById(id)) {
+            bookRepository.deleteById(id);
+        } else {
+            throw new RuntimeException("Book not found with id: " + id);
+        }
+    }
 }
