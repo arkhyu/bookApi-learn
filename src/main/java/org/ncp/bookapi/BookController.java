@@ -37,6 +37,16 @@ public class BookController {
         return book.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/by-author")
+    public List<Book>getAllBooksByAuthor(@RequestParam("author") String author ) {
+        return bookService.getAllBooksByAuthor(author);
+    }
+
+    @GetMapping("/search-title")
+    public List<Book>getAllBooksByKeywordInTitle(@RequestParam("keyword") String keyword ) {
+        return bookService.getAllBooksByKeywordInTitle(keyword);
+    }
+
     @PostMapping
     public ResponseEntity<Book> createBook(@RequestBody Book book) {
         Book createdBook = bookService.createBook(book);

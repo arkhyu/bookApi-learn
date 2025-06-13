@@ -30,6 +30,15 @@ public class BookService {
     public List<Book> getAllBooks() {
         return bookRepository.findAll();
     }
+
+    public List<Book> getAllBooksByAuthor(String author) {
+        return bookRepository.findByAuthor(author);
+    }
+
+    public List<Book> getAllBooksByKeywordInTitle(String keyword) {
+        return bookRepository.findByTitleContaining(keyword);
+    }
+
     public void deleteBook(Long id) {
         if (bookRepository.existsById(id)) {
             bookRepository.deleteById(id);
