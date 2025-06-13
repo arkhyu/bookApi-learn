@@ -6,6 +6,7 @@ import org.ncp.bookapi.services.BookService.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -13,7 +14,11 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
+import jakarta.validation.constraints.NotBlank;
 
+/// Spring only triggers validation on method parameters
+///  (like @RequestParam, @PathVariable, etc.) if you explicitly tell it to using @Validated
+@Validated
 @RestController
 @RequestMapping("/api/books")
 public class BookController {
@@ -37,9 +42,11 @@ public class BookController {
         return book.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+
     @GetMapping("/by-author")
-    public List<Book>getAllBooksByAuthor(@RequestParam("author") String author ) {
-        return bookService.getAllBooksByAuthor(author);
+    public ResponseEntity<List<Book>> getAllBooksByAuthor(@RequestParam("author") @NotBlank(message = "Author is required") String author ) {
+        var books =  bookService.getAllBooksByAuthor(author);
+        return ResponseEntity.ok(books);
     }
 
     @GetMapping("/search-title")

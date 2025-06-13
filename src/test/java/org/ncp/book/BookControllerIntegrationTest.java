@@ -73,6 +73,23 @@ public class BookControllerIntegrationTest {
             assertThat(book.getAuthor()).isEqualTo("Author A");
         }
     }
+
+    @Test
+    public void shouldReturnErrorIfAuthorIsBlank() {
+
+        var book1 = createBook("Title One", "Author A");
+
+        bookRepository.save(book1);
+
+        // Act: call GET /api/books/by-author?author=Author A
+        ResponseEntity<String> response = testRestTemplate.getForEntity(
+                "/api/books/by-author?author={author}", String.class, "");
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(response.getBody()).contains("Author is required");
+    }
+
+
     private static Book createBook(String title, String author) {
         return new Book(title, author);
     }
